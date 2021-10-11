@@ -1,0 +1,37 @@
+.order-card{
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    margin-top: 50px;
+}
+
+.order-row{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.date{
+    font-size: 12px;
+    color: #0E79BD;
+
+}
+.buyer-details{
+    margin-top: 40px;
+}
+
+.buyer{
+    padding-right: 30px;
+}
+
+.end-text{
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    text-transform: uppercase;
+    color: #0E79BD;
+}

@@ -1,0 +1,50 @@
+
+.admin-heading{
+    color:#0E79BD;
+    text-align: center;
+    width: fit-content;
+    padding: 30px;
+    border-bottom:2px solid #0E79BD;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
+h2.admin-heading{
+    border: none;
+    font-size: 26px;
+    margin-top: 60px;
+    padding: 0;
+}
+
+.row{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px 20px;
+}
+
+.functions{
+    width: 100%;
+    padding: 0 100px;
+}
+
+.card{
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 70px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 30px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.card span{
+    width: fit-content;
+}
+
+.card img{
+    width: 50px;
+}
