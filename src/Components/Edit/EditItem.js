@@ -19,8 +19,8 @@ function MyVerticallyCenteredModal(props) {
     const [type,setType]=useState();
     const [instock,setInstock]=useState("In stock");
 
-    const pid=localStorage.getItem('pid');
-
+    let pid=localStorage.getItem('pid');
+    
 
     useEffect(()=>{
         
@@ -29,12 +29,12 @@ function MyVerticallyCenteredModal(props) {
             console.log(res.data.Detail.name)
             setDetail(res.data.Detail);
             console.log(detail)
-            setTitle(detail.name);
-            setSellPrice(detail.after_sale_price)
-            setOrigPrice(detail.actual_price);
-            setDesc(detail.description);
-            setSpeci(detail.specification);
-            setType(detail.Type)
+            setTitle(res.data.Detail.name);
+            setSellPrice(res.data.Detail.after_sale_price)
+            setOrigPrice(res.data.Detail.actual_price);
+            setDesc(res.data.Detail.description);
+            setSpeci(res.data.Detail.specification);
+            setType(res.data.Detail.Type)
             if(detail.in_stock==="1"){
                 setInstock(true);
             }
@@ -46,9 +46,9 @@ function MyVerticallyCenteredModal(props) {
         .catch(err=>{
             console.log(err)
         })
-    },[])
-
-
+    },[props.onHide])
+    
+    
 
 
     const [files,setFiles]=useState([])
@@ -135,7 +135,7 @@ function MyVerticallyCenteredModal(props) {
             setMessage('')
         },2000)
 
-        window.location.reload()
+        
 
     }
 
@@ -283,11 +283,13 @@ function EditItem() {
           
     }
 
+    //var Pid;
 
     const openModal=(pid,e)=>{
         e.preventDefault()
         setModalShow(true)
         localStorage.setItem('pid',pid)
+        //Pid=parseInt(pid)
     }
 
     
