@@ -113,6 +113,7 @@ function AddSubCategory() {
              
              
              <input type="text" placeholder="Sub-Category name" className="input" value={title} onChange={(e)=>setTitle(e.target.value)}/>
+             
              <input type="text" placeholder="Category ID" className="input" value={cid} onChange={(e)=>setCid(e.target.value)}/>
             {message && <Alert variant="success">{message}</Alert>}
 
