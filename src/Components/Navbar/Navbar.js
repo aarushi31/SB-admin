@@ -91,13 +91,13 @@ function Navbar() {
       </Rbs.NavDropdown> */}
     </Rbs.Nav>
     <Rbs.Nav>
-      <Rbs.Nav.Link href="/category" style={{color:'#0E79BD',fontWeight:'600',marginRight:'30px'}}>Category</Rbs.Nav.Link>
+      {/* <Rbs.Nav.Link href="/category" style={{color:'#0E79BD',fontWeight:'600',marginRight:'30px'}}>Category</Rbs.Nav.Link>
       <Rbs.Nav.Link href="/aboutus" style={{color:'#0E79BD',fontWeight:'600',marginRight:'30px'}}>About us</Rbs.Nav.Link>
       <Rbs.Nav.Link href="/cart" style={{color:'#0E79BD',fontWeight:'600',marginRight:'30px'}}>My Cart</Rbs.Nav.Link>
       <Rbs.Nav.Link href="/wishlist" style={{color:'#0E79BD',fontWeight:'600',marginRight:'30px'}}>Wishlist</Rbs.Nav.Link>
       <Rbs.Nav.Link href="/login" style={{width:'100px',background:'#0E79BD',color:'white',display:'flex',justifyContent:'center',alignItems:'center',borderRadius:'25px'}}>
          Login
-    </Rbs.Nav.Link>
+    </Rbs.Nav.Link> */}
       
     </Rbs.Nav>
   </Rbs.Navbar.Collapse>

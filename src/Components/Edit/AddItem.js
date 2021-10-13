@@ -3,12 +3,15 @@ import { Alert, Container } from 'react-bootstrap'
 import upload from '../../images/upload.png'
 import './style.css'
 import {useDropzone} from 'react-dropzone'
-
+import axios from 'axios'
 
 
 function AddSubCategory() {
 
     const [files,setFiles]=useState([])
+    const [fpath,setFpath]=useState();
+    const [fname,setFname]=useState();
+    const [ftype,setFtype]=useState()
     
 
     const {getRootProps,getInputProps}=useDropzone({
@@ -24,6 +27,10 @@ function AddSubCategory() {
 
 
     const images=files.map(file=>{
+        
+        // setFpath(file.path);
+        // setFname(file.name);
+        // setFtype(file.type);
         return(
         <div key={file.name}>
             <div>
@@ -38,15 +45,133 @@ function AddSubCategory() {
     const [title,setTitle]=useState()
     const [sellPrice,setSellPrice]=useState()
     const [origPrice,setOrigPrice]=useState()
+    const [inStock,setInstock]=useState(true)
+    const [desc,setDesc]=useState('');
+    const [specif,setSpeci]=useState('');
+    const [type,setType]=useState('');
+    const [options,setOptions]=useState(1);
+    const [cid,setCid]=useState();
+    const [scid,setScid]=useState();
+    const [optionsData,setOptionsdata]=useState({});
+
+    
+    
+
+    var data = JSON.stringify({
+        "name": title,
+        "image_url": "url url",
+        "after_sale_price": parseInt(sellPrice),
+        "actual_price": parseInt(origPrice),
+        "in_stock": Boolean(inStock),
+        "description": desc,
+        "specification": specif,
+        "Type": type,
+        "scid":scid,
+        "options": {
+          "1": {
+            "name": "Small"
+          },
+          "2": {
+            "name": "Medium"
+          },
+          "3": {
+            "name": "Large"
+          }
+        },
+        "cid": cid
+      });
+
+    
+      
+
+    
+    var config = {
+        method: 'post',
+        url: 'http://proffus.pythonanywhere.com/api/addProduct/',
+        headers: { 
+          'Authorization': 'Basic c2VhYmFza2V0b2ZmaWNpYWxAZ21haWwuY29tOlNlYWJhc2tldEAxMjM0', 
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin':'*',
+          'Access-Control-Allow-Credentials':true
+        },
+        data : data
+    };
+
+
+
+    const fileData={
+        uri:files.length!==0?files[0].path:null,
+        name:files.length!==0?files[0].name:null,
+        type:files.length!==0?files[0].type:null
+    }
+
+    
 
     const handleSubmit=(e)=>{
         e.preventDefault()
-        setMessage('Sub category added successfully')
-        setTitle('');
-        setFiles([])
-        setSellPrice()
-        setOrigPrice()
+        setMessage('')
+        //console.log(sellPrice)
+        // if(options==1){
+        //     setOptionsdata({
+        //         "1": {
+        //             "name": "Small"
+        //           },
+        //           "2": {
+        //             "name": "Medium"
+        //           },
+        //           "3": {
+        //             "name": "Large"
+        //           }
+        //     })
+    
+        // }
+    
+        // else{
+        //     setOptionsdata({
+        //         "4":{
+        //             "name":"One size"
+        //         }
+        //     })
+        // }
+    
+        //console.log(optionsData)
 
+        // axios.post('http://proffus.pythonanywhere.com/api/addimage',{
+        //     headers: { 
+        //         'Authorization': 'Basic c2VhYmFza2V0b2ZmaWNpYWxAZ21haWwuY29tOlNlYWJhc2tldEAxMjM0', 
+        //         'Content-Type': 'application/json'
+        //       }
+        // },fileData)
+        // .then(res=>{
+        //     console.log(res);
+        // }).catch(err=>{
+        //     console.log(err)
+        // })
+
+
+        axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+          if(response){
+            setMessage('Item added successfully')
+          }
+          else{
+              setMessage('Error adding item')
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+
+        setTitle('');
+        setFiles([]);
+        setTitle('');
+        setCid();
+        setScid();
+        setDesc('');
+        setInstock()
+        
     }
 
     
@@ -59,7 +184,7 @@ function AddSubCategory() {
                     <div>{images}</div>
                     <img src={upload} alt="upload image"/>
                     
-                    {/* <span><input type="file" name="image"/></span> */}
+                    <span><input type="file" name="image"/></span>
                     
                     <input {...getInputProps()}/>
                     <span style={{marginLeft:'0'}}>Drop your file here</span>
@@ -68,10 +193,25 @@ function AddSubCategory() {
              
              
              <input type="text" placeholder="Item name" className="input" value={title} onChange={(e)=>setTitle(e.target.value)}/>
-             <input type="text" placeholder="Sell Price" className="input" value={sellPrice} onChange={(e)=>setSellPrice(e.target.value)}/>
-             <input type="text" placeholder="Original Price" className="input" value={origPrice} onChange={(e)=>setOrigPrice(e.target.value)}/>
-             
-            {message && <Alert variant="success">{message}</Alert>}
+             <input type="number" placeholder="Sell Price" className="input" value={sellPrice} onChange={(e)=>setSellPrice(e.target.value)}/>
+             <input type="number" placeholder="Original Price" className="input" value={origPrice} onChange={(e)=>setOrigPrice(e.target.value)}/>
+             {/* <input type="text" placeholder="In Stock(Type true or false)" className="input" value={inStock} onChange={(e)=>setInstock(e.target.value==='true'?true:false)}/> */}
+             <select name="In stock" value={inStock} className="input" onChange={(e)=>setInstock(e.target.value)}>
+                <option value="true">yes</option>
+                <option value="false">no</option>
+             </select>
+
+
+             <input type="text" placeholder="Description" className="input" value={desc} onChange={(e)=>setDesc(e.target.value)}/>
+             <input type="text" placeholder="Specifications" className="input" value={specif} onChange={(e)=>setSpeci(e.target.value)}/>
+             <input type="text" placeholder="Type" className="input" value={type} onChange={(e)=>setType(e.target.value)}/>
+             <input type="text" placeholder="Category ID" className="input" value={cid} onChange={(e)=>setCid(e.target.value)}/>
+             <input type="text" placeholder="Sub Category ID(Type 0 if does not exist)" className="input" value={scid} onChange={(e)=>setScid(e.target.value)}/>
+             {/* <select name="Options" value={options}>
+                <option value="1" onSelect={()=>setOptions(1)}>Large, medium, small</option>
+                <option value="2" onSelect={()=>setOptions(2)}>One size</option>
+             </select> */}
+            {message && <Alert variant="success" style={{marginTop:'30px'}}>{message}</Alert>}
 
              <button className="btn" style={{ marginTop: "30px",
                     width: "30vw",

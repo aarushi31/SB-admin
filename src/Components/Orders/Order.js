@@ -1,8 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {Container} from 'react-bootstrap'
 import './Order.css'
+import axios from 'axios'
 
 function Order() {
+
+    const [orders,setOrders]=useState();
+    var data=''
+
+    useEffect(()=>{
+        var config = {
+            method: 'post',
+            url: 'http://proffus.pythonanywhere.com/api/allorders/',
+            headers: { 
+              'Authorization': 'Basic c2VhYmFza2V0b2ZmaWNpYWxAZ21haWwuY29tOlNlYWJhc2tldEAxMjM0'
+            },
+            data : data
+          };
+          
+          axios(config)
+          .then(function (response) {
+            console.log(JSON.stringify(response.data));
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+    })
+
+
+
+
     return (
         <Container>
             <center><h1 className="admin-heading">All orders</h1></center>
