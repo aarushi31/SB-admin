@@ -124,7 +124,7 @@ function AddSubCategory() {
                     borderRadius: "10px",
                     color: "white"}} onClick={handleSubmit}>Add sub-category</button>
 
-                    <button onClick={getUrl}>Click</button>
+                    
 
         </Container>
     )
