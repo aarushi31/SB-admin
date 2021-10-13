@@ -250,8 +250,9 @@ function EditItem() {
     const [reload,setreload]=useState(false)
     const handleDelete=(pid,e)=>{
         e.preventDefault();
+        localStorage.setItem('pid',pid)
         var data = JSON.stringify({
-            "pid": parseInt(pid)
+            "pid": parseInt(localStorage.getItem('pid'))
         });
 
         var config = {
@@ -277,7 +278,8 @@ function EditItem() {
     }
 
 
-    const openModal=(pid)=>{
+    const openModal=(pid,e)=>{
+        e.preventDefault()
         setModalShow(true)
         localStorage.setItem('pid',pid)
     }
@@ -296,7 +298,7 @@ function EditItem() {
                             <span>₹ {product.after_sale_price}</span>
                             <span>₹ {product.actual_price}</span>
                             <div className="edit-buttons">
-                                <p className="edit" onClick={() => openModal(product.pid)}>Edit Item</p>
+                                <p className="edit" onClick={(e) => openModal(product.pid,e)}>Edit Item</p>
                                 <p className="delete" onClick={(e)=>handleDelete(product.pid,e)}>Delete item</p>
                             </div>
                         </div>
