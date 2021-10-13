@@ -45,7 +45,7 @@ function AddSubCategory() {
     const [title,setTitle]=useState()
     const [sellPrice,setSellPrice]=useState()
     const [origPrice,setOrigPrice]=useState()
-    const [inStock,setInstock]=useState(true)
+    const [inStock,setInstock]=useState("In stock")
     const [desc,setDesc]=useState('');
     const [specif,setSpeci]=useState('');
     const [type,setType]=useState('');
@@ -196,7 +196,8 @@ function AddSubCategory() {
              <input type="number" placeholder="Sell Price" className="input" value={sellPrice} onChange={(e)=>setSellPrice(e.target.value)}/>
              <input type="number" placeholder="Original Price" className="input" value={origPrice} onChange={(e)=>setOrigPrice(e.target.value)}/>
              {/* <input type="text" placeholder="In Stock(Type true or false)" className="input" value={inStock} onChange={(e)=>setInstock(e.target.value==='true'?true:false)}/> */}
-             <select name="In stock" value={inStock} className="input" onChange={(e)=>setInstock(e.target.value)}>
+             <select name="In stock" value={inStock} className="input" onChange={(e)=>setInstock(e.target.value)} defaultValue="In stock">
+                 <option value="In stock">In stock</option>
                 <option value="true">yes</option>
                 <option value="false">no</option>
              </select>

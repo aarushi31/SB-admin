@@ -8,7 +8,7 @@ import axios from 'axios'
 
 
 function MyVerticallyCenteredModal(props) {
-
+    
     const [detail,setDetail]=useState({});
 
     const [title,setTitle]=useState();
@@ -17,13 +17,16 @@ function MyVerticallyCenteredModal(props) {
     const [desc,setDesc]=useState();
     const [speci,setSpeci]=useState();
     const [type,setType]=useState();
-    const [instock,setInstock]=useState();
+    const [instock,setInstock]=useState("In stock");
 
     const pid=localStorage.getItem('pid');
+
+
     useEffect(()=>{
+        
         axios.post(`http://proffus.pythonanywhere.com/api/getProduct/p_id/${pid}`)
         .then(res=>{
-            console.log(res.data)
+            console.log(res.data.Detail.name)
             setDetail(res.data.Detail);
             console.log(detail)
             setTitle(detail.name);
@@ -132,6 +135,8 @@ function MyVerticallyCenteredModal(props) {
             setMessage('')
         },2000)
 
+        window.location.reload()
+
     }
 
     return (
@@ -177,14 +182,14 @@ function MyVerticallyCenteredModal(props) {
             placeholder="Sell Price"
             aria-label="Sell Price"
             aria-describedby="basic-addon2"
-            value={`₹ ${sellPrice}`}
+            value={sellPrice}
             onChange={(e)=>setSellPrice(e.target.value)}
         />
             <FormControl
             placeholder="Original Price"
             aria-label="Original Price"
             aria-describedby="basic-addon2"
-            value={`₹ ${origPrice}`}
+            value={origPrice}
             onChange={(e)=>setOrigPrice(e.target.value)}
         />
          <FormControl
@@ -209,7 +214,8 @@ function MyVerticallyCenteredModal(props) {
             onChange={(e)=>setType(e.target.value)}
         />
 
-        <select name="In stock" value={instock} className="input" onChange={(e)=>setInstock(e.target.value)}>
+        <select name="In stock" value={instock} className="input" defaultValue="In stock" onChange={(e)=>setInstock(e.target.value)}>
+                <option value="In stock">In stock</option>
                 <option value="true">yes</option>
                 <option value="false">no</option>
             </select>

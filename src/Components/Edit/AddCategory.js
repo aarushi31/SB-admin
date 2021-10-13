@@ -38,7 +38,7 @@ function AddCategory() {
     
     const [title,setTitle]=useState()
 
-    const [subs,setSubs]=useState(true);
+    const [subs,setSubs]=useState("Has sub categories");
     const [cid,setCid]=useState();
 
 
@@ -60,7 +60,7 @@ function AddCategory() {
 
     const postdata=JSON.stringify({
         "name":`${title}`,
-        "have_sub":true,
+        "have_sub":Boolean(subs),
         "image_url":'image url',
         "cid": parseInt(cid)
     })
@@ -121,8 +121,8 @@ function AddCategory() {
              
              <input type="text" placeholder="Category name" className="input" value={title} onChange={(e)=>setTitle(e.target.value)}/>
              <input type="text" placeholder="Category ID" className="input" value={cid} onChange={(e)=>setCid(e.target.value)}/>
-             <select name="Has sub-categories" className="input" value={subs}>
-                 <option value="Has sub categories" disabled>Has sub categories</option>
+             <select name="Has sub-categories" className="input" value={subs} defaultValue="Has sub categories">
+                 <option value="Has sub categories">Has sub categories</option>
                 <option value="true" onSelect={(e)=>setSubs(true)}>True</option>
                 <option value="false" onSelect={(e)=>setSubs(false)}>False</option>
              </select>
