@@ -38,12 +38,36 @@ function AddSubCategory() {
     
     const [title,setTitle]=useState()
     const [cid,setCid]=useState()
+    const [url,setUrl]=useState('');
+    const getUrl=()=>{
 
+        const data=new FormData()
+        data.append('file',files[0])
 
+        var config = {
+            method: 'post',
+            url: 'http://proffus.pythonanywhere.com/api/addimage/',
+            headers: { 
+              'Authorization': 'Basic c2VhYmFza2V0b2ZmaWNpYWxAZ21haWwuY29tOlNlYWJhc2tldEAxMjM0', 
+              'Content-Type': 'application/json'
+            },
+            data : data
+          };
+
+          axios(config)
+          .then(res=>{
+              console.log(res)
+              setUrl(res.data.url)
+          })
+          .catch(err=>{
+              console.log(err)
+          })
+    }
     const postdata=JSON.stringify({
         "name":`${title}`,
-        "image_url":'image url',
-        "cid": parseInt(cid)
+        "image_url":url,
+        "cid": parseInt(cid),
+
     })
 
     var config = {
@@ -56,17 +80,7 @@ function AddSubCategory() {
         data : postdata
       };
 
-    const getUrl=(e)=>{
-        e.preventDefault()
-        console.log("hii")
-        axios.post('http://proffus.pythonanywhere.com/api/addimage',files[0])
-        .then(res=>{
-            console.log(res);
-        })
-        .catch(err=>{
-            console.log(err)
-        })
-    }
+    
 
 
     const handleSubmit=(e)=>{
@@ -104,10 +118,17 @@ function AddSubCategory() {
                     <div>{images}</div>
                     <img src={upload} alt="upload image"/>
                     
-                    <span><input type="file" name="image"/></span>
+                    
                     
                     <input {...getInputProps()}/>
                     <span style={{marginLeft:'0'}}>Drop your file here</span>
+                    <button className="btn" style={{ marginTop: "30px",
+                    width: "20vw",
+                    textAlign: "center",
+                    backgroundColor: "#0E79BD",
+                    border: "none",
+                    borderRadius: "10px",
+                    color: "white"}} onClick={getUrl}>Submit photo</button>
                  
              </div>
              

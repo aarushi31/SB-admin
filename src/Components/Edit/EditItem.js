@@ -80,11 +80,37 @@ function MyVerticallyCenteredModal(props) {
 
     const [message,setMessage]=useState('');
 
+    const [url,setUrl]=useState('');
+
+    const getUrl=()=>{
+
+        const data=new FormData()
+        data.append('file',files[0])
+
+        var config = {
+            method: 'post',
+            url: 'http://proffus.pythonanywhere.com/api/addimage/',
+            headers: { 
+              'Authorization': 'Basic c2VhYmFza2V0b2ZmaWNpYWxAZ21haWwuY29tOlNlYWJhc2tldEAxMjM0', 
+              'Content-Type': 'application/json'
+            },
+            data : data
+          };
+
+          axios(config)
+          .then(res=>{
+              console.log(res)
+              setUrl(res.data.url)
+          })
+          .catch(err=>{
+              console.log(err)
+          })
+    }
     
 
     var data = JSON.stringify({
         "name": title,
-        "image_url": "https://url/url",
+        "image_url": url,
         "after_sale_price": parseInt(sellPrice),
         "actual_price": parseInt(origPrice),
         "in_stock": Boolean(instock),
@@ -163,10 +189,17 @@ function MyVerticallyCenteredModal(props) {
                  <div>{images}</div>
                  <img src={upload} alt="upload image"/>
                  
-                 <span><input type="file" name="image"/></span>
+                
                  
                  <input {...getInputProps()}/>
                  <span style={{marginLeft:'0'}}>Drop your file here</span>
+                 <button className="btn" style={{ marginTop: "30px",
+                    width: "20vw",
+                    textAlign: "center",
+                    backgroundColor: "#0E79BD",
+                    border: "none",
+                    borderRadius: "10px",
+                    color: "white"}} onClick={getUrl}>Submit photo</button>
               
           </div>
           </center>
@@ -301,7 +334,7 @@ function EditItem() {
                 {products.map((product,idx)=>{
                     return(
                         <div className="product" key={idx}>
-                            <img src={katla} alt="product-image"/>
+                            <img src={product.image_url} alt="product-image"/>
                             <span>{product.name}</span>
                             <span>₹ {product.after_sale_price}</span>
                             <span>₹ {product.actual_price}</span>

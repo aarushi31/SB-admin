@@ -7,6 +7,7 @@ import axios from 'axios'
 
 
 
+
 function AddCategory() {
 
     const [files,setFiles]=useState([])
@@ -25,6 +26,7 @@ function AddCategory() {
 
 
     const images=files.map(file=>{
+        console.log(file);
         return(
         <div key={file.name}>
             <div>
@@ -49,39 +51,59 @@ function AddCategory() {
         }
     }
 
-    // const config={
-    //     headers:{
-    //         'Content-Type':'application/json',
-    //         'Access-Control-Allow-Origin':'*',
-    //         'Access-Control-Allow-Credentials':true,
-    //         'Authorization': 'Basic c2VhYmFza2V0b2ZmaWNpYWxAZ21haWwuY29tOlNlYWJhc2tldEAxMjM0', 
-    //     }
-    // }
+   
+    const [url,setUrl]=useState('');
 
-    const postdata=JSON.stringify({
-        "name":`${title}`,
-        "have_sub":Boolean(subs),
-        "image_url":'image url',
-        "cid": parseInt(cid)
-    })
+    const getUrl=()=>{
 
-    var config = {
-        method: 'post',
-        url: 'http://proffus.pythonanywhere.com/api/addCategory/',
-        headers: { 
-          'Authorization': 'Basic c2VhYmFza2V0b2ZmaWNpYWxAZ21haWwuY29tOlNlYWJhc2tldEAxMjM0', 
-          'Content-Type': 'application/json'
-        },
-        data : postdata
-      };
+        const data=new FormData()
+        data.append('file',files[0])
+
+        var config = {
+            method: 'post',
+            url: 'http://proffus.pythonanywhere.com/api/addimage/',
+            headers: { 
+              'Authorization': 'Basic c2VhYmFza2V0b2ZmaWNpYWxAZ21haWwuY29tOlNlYWJhc2tldEAxMjM0', 
+              'Content-Type': 'application/json'
+            },
+            data : data
+          };
+
+          axios(config)
+          .then(res=>{
+              console.log(res)
+              setUrl(res.data.url)
+          })
+          .catch(err=>{
+              console.log(err)
+          })
+    }
+
+    
       
-     
-      
-
     const handleSubmit=(e)=>{
         e.preventDefault()
+        
         console.log(files[0])
         console.log(subs)
+        const postdata=JSON.stringify({
+            "name":`${title}`,
+            "have_sub":Boolean(subs),
+            "image_url":url,
+            "cid": parseInt(cid)
+        })
+    
+        var config = {
+            method: 'post',
+            url: 'http://proffus.pythonanywhere.com/api/addCategory/',
+            headers: { 
+              'Authorization': 'Basic c2VhYmFza2V0b2ZmaWNpYWxAZ21haWwuY29tOlNlYWJhc2tldEAxMjM0', 
+              'Content-Type': 'application/json'
+            },
+            data : postdata
+          };
+
+        
 
         axios(config)
         .then(function (response) {
@@ -112,16 +134,23 @@ function AddCategory() {
                     <div>{images}</div>
                     <img src={upload} alt="upload image"/>
                     
-                    <span><input type="file" name="image"/></span>
+                    {/* <span><input type="file" name="image"/></span> */}
                     
                     <input {...getInputProps()}/>
                     <span style={{marginLeft:'0'}}>Drop your file here</span>
+                    <button className="btn" style={{ marginTop: "30px",
+                    width: "20vw",
+                    textAlign: "center",
+                    backgroundColor: "#0E79BD",
+                    border: "none",
+                    borderRadius: "10px",
+                    color: "white"}} onClick={getUrl}>Submit photo</button>
                  
              </div>
              
              <input type="text" placeholder="Category name" className="input" value={title} onChange={(e)=>setTitle(e.target.value)}/>
              <input type="text" placeholder="Category ID" className="input" value={cid} onChange={(e)=>setCid(e.target.value)}/>
-             <select name="Has sub-categories" className="input" value={subs} defaultValue="Has sub categories">
+             <select name="Has sub-categories" className="input" value={subs} defaultValue="Has sub categories"  onChange={(e)=>setSubs(e.target.value)}>
                  <option value="Has sub categories">Has sub categories</option>
                 <option value="true" onSelect={(e)=>setSubs(true)}>True</option>
                 <option value="false" onSelect={(e)=>setSubs(false)}>False</option>
@@ -135,6 +164,8 @@ function AddCategory() {
                     border: "none",
                     borderRadius: "10px",
                     color: "white"}} onClick={handleSubmit}>Add category</button>
+                    
+                    
 
         </Container>
     )

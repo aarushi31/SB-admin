@@ -57,96 +57,83 @@ function AddSubCategory() {
     
     
 
-    var data = JSON.stringify({
-        "name": title,
-        "image_url": "url url",
-        "after_sale_price": parseInt(sellPrice),
-        "actual_price": parseInt(origPrice),
-        "in_stock": Boolean(inStock),
-        "description": desc,
-        "specification": specif,
-        "Type": type,
-        "scid":scid,
-        "options": {
-          "1": {
-            "name": "Small"
-          },
-          "2": {
-            "name": "Medium"
-          },
-          "3": {
-            "name": "Large"
-          }
-        },
-        "cid": cid
-      });
+    
+
+
 
     
-      
 
-    
-    var config = {
-        method: 'post',
-        url: 'http://proffus.pythonanywhere.com/api/addProduct/',
-        headers: { 
-          'Authorization': 'Basic c2VhYmFza2V0b2ZmaWNpYWxAZ21haWwuY29tOlNlYWJhc2tldEAxMjM0', 
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin':'*',
-          'Access-Control-Allow-Credentials':true
-        },
-        data : data
-    };
+    const [url,setUrl]=useState('');
 
+    const getUrl=()=>{
 
+        const data=new FormData()
+        data.append('file',files[0])
 
-    const fileData={
-        uri:files.length!==0?files[0].path:null,
-        name:files.length!==0?files[0].name:null,
-        type:files.length!==0?files[0].type:null
+        var config = {
+            method: 'post',
+            url: 'http://proffus.pythonanywhere.com/api/addimage/',
+            headers: { 
+              'Authorization': 'Basic c2VhYmFza2V0b2ZmaWNpYWxAZ21haWwuY29tOlNlYWJhc2tldEAxMjM0', 
+              'Content-Type': 'application/json'
+            },
+            data : data
+          };
+
+          axios(config)
+          .then(res=>{
+              console.log(res)
+              setUrl(res.data.url)
+          })
+          .catch(err=>{
+              console.log(err)
+          })
     }
 
+    var data = JSON.stringify({
+      "name": title,
+      "image_url": url,
+      "after_sale_price": parseInt(sellPrice),
+      "actual_price": parseInt(origPrice),
+      "in_stock": Boolean(inStock),
+      "description": desc,
+      "specification": specif,
+      "Type": type,
+      "scid":scid,
+      "options": {
+        "1": {
+          "name": "Small"
+        },
+        "2": {
+          "name": "Medium"
+        },
+        "3": {
+          "name": "Large"
+        }
+      },
+      "cid": cid
+    });
+
+  
     
+
+  
+  var config = {
+      method: 'post',
+      url: 'http://proffus.pythonanywhere.com/api/addProduct/',
+      headers: { 
+        'Authorization': 'Basic c2VhYmFza2V0b2ZmaWNpYWxAZ21haWwuY29tOlNlYWJhc2tldEAxMjM0', 
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin':'*',
+        'Access-Control-Allow-Credentials':true
+      },
+      data : data
+  };
 
     const handleSubmit=(e)=>{
         e.preventDefault()
         setMessage('')
-        //console.log(sellPrice)
-        // if(options==1){
-        //     setOptionsdata({
-        //         "1": {
-        //             "name": "Small"
-        //           },
-        //           "2": {
-        //             "name": "Medium"
-        //           },
-        //           "3": {
-        //             "name": "Large"
-        //           }
-        //     })
-    
-        // }
-    
-        // else{
-        //     setOptionsdata({
-        //         "4":{
-        //             "name":"One size"
-        //         }
-        //     })
-        // }
-    
-        //console.log(optionsData)
-
-        // axios.post('http://proffus.pythonanywhere.com/api/addimage',{
-        //     headers: { 
-        //         'Authorization': 'Basic c2VhYmFza2V0b2ZmaWNpYWxAZ21haWwuY29tOlNlYWJhc2tldEAxMjM0', 
-        //         'Content-Type': 'application/json'
-        //       }
-        // },fileData)
-        // .then(res=>{
-        //     console.log(res);
-        // }).catch(err=>{
-        //     console.log(err)
-        // })
+        
 
 
         axios(config)
@@ -184,10 +171,17 @@ function AddSubCategory() {
                     <div>{images}</div>
                     <img src={upload} alt="upload image"/>
                     
-                    <span><input type="file" name="image"/></span>
+                    
                     
                     <input {...getInputProps()}/>
                     <span style={{marginLeft:'0'}}>Drop your file here</span>
+                    <button className="btn" style={{ marginTop: "30px",
+                    width: "20vw",
+                    textAlign: "center",
+                    backgroundColor: "#0E79BD",
+                    border: "none",
+                    borderRadius: "10px",
+                    color: "white"}} onClick={getUrl}>Submit photo</button>
                  
              </div>
              
