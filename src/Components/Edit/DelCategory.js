@@ -112,7 +112,7 @@ function DelCategory() {
                         
                         return(
                             <div className="card" style={{width:'200px',justifyContent:'center'}} key={idx}>
-                                <img src={category.url} alt="View all orders" style={{width:'100%'}}/>
+                                <img src={category.url} alt="Image" style={{width:'100%'}}/>
                                 <span>{category.name}</span>
                                 <span style={{cursor:'pointer'}} onClick={(e)=>handleSubcategory(category.cid,e)}>See sub categories</span>
                                 <span className="delete" style={{marginTop:'20px'}} onClick={(e)=>handleDelete(category.cid,e)}>Delete Category</span>
