@@ -104,7 +104,9 @@ function AddSubCategory() {
         });
         
         setTitle('');
-        setFiles([])
+        setFiles([]);
+        setCid();
+        
 
     }
 

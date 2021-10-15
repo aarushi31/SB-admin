@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import katla from '../../images/katla.jpg'
 import axios from 'axios'
+import { useHistory } from 'react-router'
 
 function DelCategory() {
 
     const [categories,setCategories]=useState([])
     const [subCategories,setSubcategories]=useState([])
+    const history=useHistory()
 
     useEffect(()=>{
         axios.post('http://proffus.pythonanywhere.com/api/getCategories/')
@@ -73,7 +75,7 @@ function DelCategory() {
           axios(config)
           .then(function (response) {
             console.log(JSON.stringify(response.data));
-            window.location.reload()
+            history.push('/')
           })
           .catch(function (error) {
             console.log(error);

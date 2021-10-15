@@ -122,7 +122,10 @@ function AddCategory() {
 
         
         setTitle('');
-        setFiles([])
+        setFiles([]);
+        setCid();
+        setSubs("Has sub categories");
+        
 
     }
 

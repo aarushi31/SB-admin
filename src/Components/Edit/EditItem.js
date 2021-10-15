@@ -5,6 +5,7 @@ import './style.css'
 import upload from '../../images/upload.png'
 import {useDropzone} from 'react-dropzone'
 import axios from 'axios'
+import { useHistory } from 'react-router'
 
 
 function MyVerticallyCenteredModal(props) {
@@ -270,7 +271,8 @@ function MyVerticallyCenteredModal(props) {
 function EditItem() {
 
     const [modalShow, setModalShow] = useState(false);
-    const [products,setProducts]=useState([])
+    const [products,setProducts]=useState([]);
+    const history=useHistory()
 
     
 
@@ -307,7 +309,7 @@ function EditItem() {
           axios(config)
           .then(function (response) {
             console.log(JSON.stringify(response.data));
-            window.location.reload()
+            history.push('/')
             
           })
           .catch(function (error) {

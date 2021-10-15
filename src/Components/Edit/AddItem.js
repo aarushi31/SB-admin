@@ -141,6 +141,15 @@ function AddSubCategory() {
           console.log(JSON.stringify(response.data));
           if(response){
             setMessage('Item added successfully')
+            setTitle('');
+            setFiles([]);
+            setType('');
+            setCid();
+            setScid();
+            setDesc('');
+            setInstock();
+            setOrigPrice();
+            setSellPrice()
           }
           else{
               setMessage('Error adding item')
@@ -151,13 +160,8 @@ function AddSubCategory() {
         });
 
 
-        setTitle('');
-        setFiles([]);
-        setTitle('');
-        setCid();
-        setScid();
-        setDesc('');
-        setInstock()
+        
+
         
     }
 
