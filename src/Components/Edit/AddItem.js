@@ -9,9 +9,34 @@ import axios from 'axios'
 function AddSubCategory() {
 
     const [files,setFiles]=useState([])
-    const [fpath,setFpath]=useState();
-    const [fname,setFname]=useState();
-    const [ftype,setFtype]=useState()
+    
+    const [url,setUrl]=useState('');
+
+    const getUrl=()=>{
+
+        const data=new FormData()
+        data.append('file',files[0])
+
+        var config = {
+            method: 'post',
+            url: 'http://proffus.pythonanywhere.com/api/addimage/',
+            headers: { 
+              'Authorization': 'Basic c2VhYmFza2V0b2ZmaWNpYWxAZ21haWwuY29tOlNlYWJhc2tldEAxMjM0', 
+              'Content-Type': 'application/json'
+            },
+            data : data
+          };
+
+          axios(config)
+          .then(res=>{
+              console.log(res)
+              setUrl(res.data.url)
+          })
+          .catch(err=>{
+              console.log(err)
+          })
+    }
+
     
 
     const {getRootProps,getInputProps}=useDropzone({
@@ -31,6 +56,7 @@ function AddSubCategory() {
         // setFpath(file.path);
         // setFname(file.name);
         // setFtype(file.type);
+        getUrl()
         return(
         <div key={file.name}>
             <div>
@@ -63,33 +89,7 @@ function AddSubCategory() {
 
     
 
-    const [url,setUrl]=useState('');
-
-    const getUrl=()=>{
-
-        const data=new FormData()
-        data.append('file',files[0])
-
-        var config = {
-            method: 'post',
-            url: 'http://proffus.pythonanywhere.com/api/addimage/',
-            headers: { 
-              'Authorization': 'Basic c2VhYmFza2V0b2ZmaWNpYWxAZ21haWwuY29tOlNlYWJhc2tldEAxMjM0', 
-              'Content-Type': 'application/json'
-            },
-            data : data
-          };
-
-          axios(config)
-          .then(res=>{
-              console.log(res)
-              setUrl(res.data.url)
-          })
-          .catch(err=>{
-              console.log(err)
-          })
-    }
-
+    
     var data = JSON.stringify({
       "name": title,
       "image_url": url,
@@ -179,13 +179,13 @@ function AddSubCategory() {
                     
                     <input {...getInputProps()}/>
                     <span style={{marginLeft:'0'}}>Drop your file here</span>
-                    <button className="btn" style={{ marginTop: "30px",
+                    {/* <button className="btn" style={{ marginTop: "30px",
                     width: "20vw",
                     textAlign: "center",
                     backgroundColor: "#0E79BD",
                     border: "none",
                     borderRadius: "10px",
-                    color: "white"}} onClick={getUrl}>Submit photo</button>
+                    color: "white"}} onClick={getUrl}>Submit photo</button> */}
                  
              </div>
              

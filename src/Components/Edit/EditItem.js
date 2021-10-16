@@ -48,39 +48,6 @@ function MyVerticallyCenteredModal(props) {
             console.log(err)
         })
     },[props.onHide])
-    
-    
-
-
-    const [files,setFiles]=useState([])
-
-    
-
-
-    const {getRootProps,getInputProps}=useDropzone({
-        accept:'image/*',
-        onDrop:(acceptedFiles)=>{
-            setFiles(
-                acceptedFiles.map((file)=>Object.assign(file,{
-                    preview:URL.createObjectURL(file)
-                }))
-            )
-        }
-    })
-
-
-    const images=files.map(file=>{
-        return(
-        <div key={file.name}>
-            <div>
-                <img src={file.preview} style={{width:'100px'}} alt="preview"/>
-            </div>
-        </div>
-        )
-    })
-
-    const [message,setMessage]=useState('');
-
     const [url,setUrl]=useState('');
 
     const getUrl=()=>{
@@ -107,6 +74,41 @@ function MyVerticallyCenteredModal(props) {
               console.log(err)
           })
     }
+    
+    
+    
+
+
+    const [files,setFiles]=useState([])
+
+    
+
+
+    const {getRootProps,getInputProps}=useDropzone({
+        accept:'image/*',
+        onDrop:(acceptedFiles)=>{
+            setFiles(
+                acceptedFiles.map((file)=>Object.assign(file,{
+                    preview:URL.createObjectURL(file)
+                }))
+            )
+        }
+    })
+
+
+    const images=files.map(file=>{
+        getUrl()
+        return(
+        <div key={file.name}>
+            <div>
+                <img src={file.preview} style={{width:'100px'}} alt="preview"/>
+            </div>
+        </div>
+        )
+    })
+
+    const [message,setMessage]=useState('');
+
     
 
     var data = JSON.stringify({

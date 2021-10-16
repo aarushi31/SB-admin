@@ -11,47 +11,7 @@ import axios from 'axios'
 function AddCategory() {
 
     const [files,setFiles]=useState([])
-    
 
-    const {getRootProps,getInputProps}=useDropzone({
-        accept:'image/*',
-        onDrop:(acceptedFiles)=>{
-            setFiles(
-                acceptedFiles.map((file)=>Object.assign(file,{
-                    preview:URL.createObjectURL(file)
-                }))
-            )
-        }
-    })
-
-
-    const images=files.map(file=>{
-        console.log(file);
-        return(
-        <div key={file.name}>
-            <div>
-                <img src={file.preview} style={{width:'100px'}} alt="preview"/>
-            </div>
-        </div>
-        )
-    })
-
-    const [message,setMessage]=useState('');
-    
-    const [title,setTitle]=useState()
-
-    const [subs,setSubs]=useState("Has sub categories");
-    const [cid,setCid]=useState();
-
-
-    const authi={
-        auth:{
-            "username":"seabasketofficial@gmail.com",
-            "password":"Seabasket@1234"
-        }
-    }
-
-   
     const [url,setUrl]=useState('');
 
     const getUrl=()=>{
@@ -79,6 +39,49 @@ function AddCategory() {
           })
     }
 
+    
+
+    const {getRootProps,getInputProps}=useDropzone({
+        accept:'image/*',
+        onDrop:(acceptedFiles)=>{
+            setFiles(
+                acceptedFiles.map((file)=>Object.assign(file,{
+                    preview:URL.createObjectURL(file)
+                }))
+            )
+        }
+    })
+
+
+    const images=files.map(file=>{
+        //console.log(file);
+        getUrl()
+        return(
+        <div key={file.name}>
+            <div>
+                <img src={file.preview} style={{width:'100px'}} alt="preview"/>
+            </div>
+        </div>
+        )
+    })
+
+    const [message,setMessage]=useState('');
+    
+    const [title,setTitle]=useState()
+
+    const [subs,setSubs]=useState("Has sub categories");
+    const [cid,setCid]=useState();
+
+
+    const authi={
+        auth:{
+            "username":"seabasketofficial@gmail.com",
+            "password":"Seabasket@1234"
+        }
+    }
+
+   
+    
     
       
     const handleSubmit=(e)=>{
@@ -141,13 +144,13 @@ function AddCategory() {
                     
                     <input {...getInputProps()}/>
                     <span style={{marginLeft:'0'}}>Drop your file here</span>
-                    <button className="btn" style={{ marginTop: "30px",
+                    {/* <button className="btn" style={{ marginTop: "30px",
                     width: "20vw",
                     textAlign: "center",
                     backgroundColor: "#0E79BD",
                     border: "none",
                     borderRadius: "10px",
-                    color: "white"}} onClick={getUrl}>Submit photo</button>
+                    color: "white"}} onClick={getUrl}>Submit photo</button> */}
                  
              </div>
              
