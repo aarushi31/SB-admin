@@ -196,13 +196,13 @@ function MyVerticallyCenteredModal(props) {
                  
                  <input {...getInputProps()}/>
                  <span style={{marginLeft:'0'}}>Drop your file here</span>
-                 <button className="btn" style={{ marginTop: "30px",
+                 {/* <button className="btn" style={{ marginTop: "30px",
                     width: "20vw",
                     textAlign: "center",
                     backgroundColor: "#0E79BD",
                     border: "none",
                     borderRadius: "10px",
-                    color: "white"}} onClick={getUrl}>Submit photo</button>
+                    color: "white"}} onClick={getUrl}>Submit photo</button> */}
               
           </div>
           </center>
