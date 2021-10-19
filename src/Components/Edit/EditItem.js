@@ -19,6 +19,16 @@ function MyVerticallyCenteredModal(props) {
     const [speci,setSpeci]=useState();
     const [type,setType]=useState();
     const [instock,setInstock]=useState("In stock");
+    const [w1,setw1]=useState();
+    const [w2,setw2]=useState();
+    const [w3,setw3]=useState();
+    const [p1,setp1]=useState();
+    const [p2,setp2]=useState();
+    const [p3,setp3]=useState();
+    const [origPrice1,setOrigPrice1]=useState()
+    const [origPrice2,setOrigPrice2]=useState()
+    const [origPrice3,setOrigPrice3]=useState()
+    const [url,setUrl]=useState('');
 
     let pid=localStorage.getItem('pid');
     
@@ -30,9 +40,27 @@ function MyVerticallyCenteredModal(props) {
             console.log(res.data.Detail.name)
             setDetail(res.data.Detail);
             console.log(detail)
+
+
             setTitle(res.data.Detail.name);
-            setSellPrice(res.data.Detail.after_sale_price)
-            setOrigPrice(res.data.Detail.actual_price);
+            setUrl(res.data.Detail.image_url)
+
+            setp1(res.data.Detail.options[2].after_sale_price)
+            setp2(res.data.Detail.options[1].after_sale_price)
+            setp3(res.data.Detail.options[0].after_sale_price)
+
+            setOrigPrice1(res.data.Detail.options[2].actual_price)
+            setOrigPrice2(res.data.Detail.options[1].actual_price)
+            setOrigPrice3(res.data.Detail.options[0].actual_price)
+
+            let str=res.data.Detail.options[2].name;
+            let str2=res.data.Detail.options[1].name;
+            let str3=res.data.Detail.options[0].name;
+            setw1(str.substr(str.indexOf(' ')+1))
+            setw2(str2.substr(str2.indexOf(' ')+1))
+            setw3(str3.substr(str3.indexOf(' ')+1))
+
+
             setDesc(res.data.Detail.description);
             setSpeci(res.data.Detail.specification);
             setType(res.data.Detail.Type)
@@ -48,7 +76,7 @@ function MyVerticallyCenteredModal(props) {
             console.log(err)
         })
     },[props.onHide])
-    const [url,setUrl]=useState('');
+    
 
     const getUrl=()=>{
 
@@ -114,23 +142,27 @@ function MyVerticallyCenteredModal(props) {
     var data = JSON.stringify({
         "name": title,
         "image_url": url,
-        "after_sale_price": parseInt(sellPrice),
-        "actual_price": parseInt(origPrice),
         "in_stock": Boolean(instock),
         "description": desc,
         "specification": speci,
         "Type": type,
         "options": {
-          "1": {
-            "name": "Small"
+            "1": {
+              "name": `Small ${w3}`,
+              "after_sale_price": parseInt(p3),
+              "actual_price": parseInt(origPrice3)
+            },
+            "2": {
+              "name": `Medium ${w2}`,
+              "after_sale_price": parseInt(p2),
+              "actual_price": parseInt(origPrice2)
+            },
+            "3": {
+              "name": `Large ${w1}`,
+              "after_sale_price": parseInt(p1),
+              "actual_price": parseInt(origPrice1)
+            }
           },
-          "2": {
-            "name": "Medium"
-          },
-          "3": {
-            "name": "Large"
-          }
-        },
         "pid": pid
       });
       
@@ -214,25 +246,83 @@ function MyVerticallyCenteredModal(props) {
             onChange={(e)=>setTitle(e.target.value)}
             style={{marginTop:'20px'}}
         />
-            <FormControl
-            placeholder="Sell Price"
-            aria-label="Sell Price"
+        <label style={{marginTop:'30px'}}>Large</label>
+        <FormControl
+            placeholder="Weight"
+            aria-label="Weight"
             aria-describedby="basic-addon2"
-            value={sellPrice}
-            onChange={(e)=>setSellPrice(e.target.value)}
+            value={w1}
+            onChange={(e)=>setw1(e.target.value)}
+        />
+            <FormControl
+            placeholder="Sale Price"
+            aria-label="Sale Price"
+            aria-describedby="basic-addon2"
+            value={p1}
+            onChange={(e)=>setp1(e.target.value)}
         />
             <FormControl
             placeholder="Original Price"
             aria-label="Original Price"
             aria-describedby="basic-addon2"
-            value={origPrice}
-            onChange={(e)=>setOrigPrice(e.target.value)}
+            value={origPrice1}
+            onChange={(e)=>setOrigPrice1(e.target.value)}
         />
+
+
+<label style={{marginTop:'30px'}}>Medium</label>
+        <FormControl
+            placeholder="Weight"
+            aria-label="Weight"
+            aria-describedby="basic-addon2"
+            value={w2}
+            onChange={(e)=>setw2(e.target.value)}
+        />
+            <FormControl
+            placeholder="Sale Price"
+            aria-label="Sale Price"
+            aria-describedby="basic-addon2"
+            value={p2}
+            onChange={(e)=>setp2(e.target.value)}
+        />
+            <FormControl
+            placeholder="Original Price"
+            aria-label="Original Price"
+            aria-describedby="basic-addon2"
+            value={origPrice2}
+            onChange={(e)=>setOrigPrice2(e.target.value)}
+        />
+
+        <label style={{marginTop:'30px'}}>Small</label>
+        <FormControl
+            placeholder="Weight"
+            aria-label="Weight"
+            aria-describedby="basic-addon2"
+            value={w3}
+            onChange={(e)=>setw3(e.target.value)}
+        />
+            <FormControl
+            placeholder="Sale Price"
+            aria-label="Sale Price"
+            aria-describedby="basic-addon2"
+            value={p3}
+            onChange={(e)=>setp3(e.target.value)}
+        />
+            <FormControl
+            placeholder="Original Price"
+            aria-label="Original Price"
+            aria-describedby="basic-addon2"
+            value={origPrice3}
+            onChange={(e)=>setOrigPrice3(e.target.value)}
+        />
+
+
          <FormControl
             placeholder="Specification"
             aria-label="Specification"
             aria-describedby="basic-addon2"
             value={speci}
+            style={{marginTop:'30px'}}
             onChange={(e)=>setSpeci(e.target.value)}
         />
          <FormControl
@@ -250,6 +340,7 @@ function MyVerticallyCenteredModal(props) {
             onChange={(e)=>setType(e.target.value)}
         />
 
+        <label style={{marginTop:'30px'}}>In stock</label>
         <select name="In stock" value={instock} className="input" defaultValue="In stock" onChange={(e)=>setInstock(e.target.value)}>
                 <option value="In stock">In stock</option>
                 <option value="true">yes</option>
@@ -340,8 +431,8 @@ function EditItem() {
                         <div className="product" key={idx}>
                             <img src={product.image_url} alt="product-image"/>
                             <span>{product.name}</span>
-                            <span>₹ {product.after_sale_price}</span>
-                            <span>₹ {product.actual_price}</span>
+                            <span>₹ {product.options[1].after_sale_price}</span>
+                            <span>₹ {product.options[1].actual_price}</span>
                             <div className="edit-buttons">
                                 <p className="edit" onClick={(e) => openModal(product.pid,e)}>Edit Item</p>
                                 <p className="delete" onClick={(e)=>handleDelete(product.pid,e)}>Delete item</p>
